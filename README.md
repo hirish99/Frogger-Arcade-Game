@@ -27,6 +27,7 @@ scripts/
   setup-javafx.sh                   Downloads repo-local JavaFX jars
   compile.sh                        Compiles the JavaFX application
   verify.sh                         Runs tests, then compiles the app
+  package.sh                        Builds a downloadable zip bundle
   run-game.sh                       Compiles and launches the game
 docs/
   images/gameplay.png               Screenshot used in this README
@@ -72,8 +73,32 @@ Compile without launching:
 make compile
 ```
 
+Build a downloadable zip for your current platform:
+
+```bash
+make package
+```
+
 If you already have JavaFX installed elsewhere, you can still bypass the repo-local download and point `JAVAFX_LIB` at its `lib` directory:
 
 ```bash
 JAVAFX_LIB=/path/to/javafx-sdk/lib make run
 ```
+
+## Downloadable Builds
+
+This repo now includes a GitHub Actions workflow at [.github/workflows/build-downloads.yml](.github/workflows/build-downloads.yml) that builds downloadable zip archives for:
+
+- Linux x64
+- Windows x64
+- macOS Intel
+- macOS Apple Silicon
+
+Each archive contains:
+
+- `frogger.jar`
+- the matching JavaFX runtime jars for that platform
+- `run-frogger.sh`
+- `run-frogger.bat`
+
+You can generate a bundle locally with `make package`, or run the `Build Downloads` workflow from the Actions tab and download the artifacts from the workflow run.

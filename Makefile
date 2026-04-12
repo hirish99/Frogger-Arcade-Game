@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup-javafx test compile verify run
+.PHONY: setup-javafx test compile verify package run
 
 setup-javafx:
 	./scripts/setup-javafx.sh
@@ -13,6 +13,9 @@ compile:
 
 verify:
 	./scripts/verify.sh
+
+package:
+	./scripts/package.sh
 
 run:
 	@if [[ ! -d ".javafx/lib" ]]; then ./scripts/setup-javafx.sh; fi

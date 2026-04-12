@@ -1,0 +1,54 @@
+name: Build Downloads
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  bundle:
+    name: ${{ matrix.dist_platform }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            dist_platform: linux-x64
+            javafx_platform: linux
+          - os: windows-latest
+            dist_platform: win-x64
+            javafx_platform: win
+          - os: macos-15-intel
+            dist_platform: mac-x64
+            javafx_platform: mac
+          - os: macos-latest
+            dist_platform: mac-aarch64
+            javafx_platform: mac-aarch64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build downloadable bundle
+        shell: bash
+        env:
+          DIST_PLATFORM: ${{ matrix.dist_platform }}
+          JAVAFX_PLATFORM: ${{ matrix.javafx_platform }}
+        run: |
+          chmod +x scripts/*.sh
+          ./scripts/package.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frogger-${{ matrix.dist_platform }}
+          path: dist/*.zip
+          if-no-files-found: error
