@@ -82,23 +82,7 @@ create_archive() {
   local archive_path="$2"
 
   rm -f "$archive_path"
-
-  if command -v zip >/dev/null 2>&1; then
-    (
-      cd "$BUILD_DIR"
-      zip -qr "$archive_path" "$(basename "$package_root")"
-    )
-    return
-  fi
-
-  if command -v powershell.exe >/dev/null 2>&1; then
-    powershell.exe -NoLogo -NoProfile -Command \
-      "Compress-Archive -Path '$package_root' -DestinationPath '$archive_path' -Force" >/dev/null
-    return
-  fi
-
-  echo "Unable to create archive: zip or powershell.exe is required."
-  exit 1
+  jar --create --file "$archive_path" -C "$BUILD_DIR" "$(basename "$package_root")"
 }
 
 stage_javafx_runtime() {
