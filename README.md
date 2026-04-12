@@ -102,3 +102,23 @@ Each archive contains:
 - `run-frogger.bat`
 
 You can generate a bundle locally with `make package`, or run the `Build Downloads` workflow from the Actions tab and download the artifacts from the workflow run.
+
+## Permanent Download Links
+
+Published releases now use GitHub Releases, so the latest downloadable builds can live at stable URLs:
+
+- macOS Intel: `https://github.com/hirish99/Frogger-Arcade-Game/releases/latest/download/frogger-mac-x64.zip`
+- macOS Apple Silicon: `https://github.com/hirish99/Frogger-Arcade-Game/releases/latest/download/frogger-mac-aarch64.zip`
+- Windows x64: `https://github.com/hirish99/Frogger-Arcade-Game/releases/latest/download/frogger-win-x64.zip`
+- Linux x64: `https://github.com/hirish99/Frogger-Arcade-Game/releases/latest/download/frogger-linux-x64.zip`
+
+The release publishing workflow is defined in [.github/workflows/release-downloads.yml](.github/workflows/release-downloads.yml).
+
+To publish a release:
+
+1. Push a version tag such as `v1.0.0`.
+2. Or run the `Publish Release Downloads` workflow manually from the Actions tab and provide a version tag.
+
+After the workflow finishes, users can download the game from the repository’s Releases page:
+
+- `https://github.com/hirish99/Frogger-Arcade-Game/releases`
